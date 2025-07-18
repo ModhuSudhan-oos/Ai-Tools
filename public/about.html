@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - AI Tools Directory</title>
+    <meta name="description" content="Learn more about AI Tools Directory, our mission, vision, and the team behind helping you discover the best AI solutions.">
+    <meta name="keywords" content="about AI Tools Directory, our mission, AI directory team, what we do">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.yourdomain.com/public/about.html">
+    <meta property="og:title" content="About Us - AI Tools Directory">
+    <meta property="og:description" content="Learn more about AI Tools Directory, our mission, vision, and the team behind helping you discover the best AI solutions.">
+    <meta property="og:image" content="https://www.yourdomain.com/assets/logo.png">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.yourdomain.com/public/about.html">
+    <meta property="twitter:title" content="About Us - AI Tools Directory">
+    <meta property="twitter:description" content="Learn more about AI Tools Directory, our mission, vision, and the team behind helping you discover the best AI solutions.">
+    <meta property="twitter:image" content="https://www.yourdomain.com/assets/logo.png">
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics-compat.js"></script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <button id="scrollToTopBtn" class="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-transform duration-300 scale-0 opacity-0 z-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/" class="flex items-center space-x-2">
+                <img src="/assets/logo.png" alt="AI Tools Directory Logo" class="h-8">
+                <span class="text-2xl font-bold text-gray-800 dark:text-white">AI Tools Directory</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <a href="/public/tools.html" class="hover:text-blue-600 dark:hover:text-blue-400">Tools</a>
+                <a href="/public/blog.html" class="hover:text-blue-600 dark:hover:text-blue-400">Blog</a>
+                <a href="/public/contact.html" class="hover:text-blue-600 dark:hover:text-blue-400">Contact</a>
+
+                <button id="themeToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg id="moonIcon" class="h-6 w-6 text-gray-800 dark:text-gray-200 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9 9 0 008.354-5.646z"></path></svg>
+                    <svg id="sunIcon" class="h-6 w-6 text-gray-800 dark:text-gray-200 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h1M3 12h1m15.325-7.778l-.707-.707M6.364 17.636l-.707.707M18.364 6.364l.707-.707M5.636 18.364l.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="py-16">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h1 class="text-4xl font-extrabold text-center mb-12 text-gray-800 dark:text-gray-100">About AI Tools Directory</h1>
+
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 md:p-12 prose dark:prose-invert max-w-none">
+                <p class="lead">Welcome to **AI Tools Directory** – your ultimate guide to the rapidly expanding world of Artificial Intelligence tools and solutions.</p>
+
+                <h2>Our Mission</h2>
+                <p>Our mission is simple: to make the vast and complex landscape of AI accessible and navigable for everyone. Whether you're a seasoned AI professional, a curious enthusiast, a business looking for efficiency gains, or a student exploring new technologies, we aim to be your trusted resource.</p>
+
+                <h2>What We Do</h2>
+                <p>We curate, categorize, and review a wide range of AI tools, from image generation and natural language processing to data analytics and automation. Our goal is to provide:</p>
+                <ul>
+                    <li><strong>Comprehensive Listings:</strong> A constantly updated database of AI tools across various categories.</li>
+                    <li><strong>Detailed Information:</strong> Clear descriptions, key features, pricing models (where applicable), and direct links to each tool.</li>
+                    <li><strong>User-Friendly Navigation:</strong> Easy search and filtering options to help you find exactly what you need.</li>
+                    <li><strong>Insightful Content:</strong> Our blog features articles, tutorials, and news to keep you informed about the latest trends and advancements in AI.</li>
+                </ul>
+
+                <h2>Our Vision</h2>
+                <p>We envision a future where the power of AI is harnessed by individuals and organizations of all sizes. By providing a centralized, reliable, and user-friendly directory, we hope to accelerate the adoption and innovation of AI technologies, helping to unlock new possibilities for creativity, productivity, and problem-solving.</p>
+
+                <h2>Why Choose Us?</h2>
+                <ul>
+                    <li><strong>Accuracy:</strong> We strive for the most up-to-date and accurate information on every tool listed.</li>
+                    <li><strong>Objectivity:</strong> Our reviews and listings are unbiased, focusing on the features and benefits to help you make informed decisions.</li>
+                    <li><strong>Community Focused:</strong> We believe in the power of shared knowledge and aim to build a community around AI discovery.</li>
+                </ul>
+
+                <p>Thank you for visiting AI Tools Directory. We are committed to continuously improving our platform and expanding our resources to better serve your AI exploration journey.</p>
+
+                <p class="text-center mt-8">
+                    Have questions or suggestions? Feel free to <a href="/public/contact.html" class="text-blue-600 hover:underline font-semibold">contact us</a>.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 dark:bg-gray-900 text-white py-12 mt-16">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4">AI Tools Directory</h3>
+                <p class="text-gray-400">Discover and explore the best AI tools.</p>
+                <div id="social-links-footer" class="flex space-x-4 mt-4">
+                    </div>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="/public/about.html" class="text-gray-400 hover:text-white transition duration-200">About Us</a></li>
+                    <li><a href="/public/privacy.html" class="text-gray-400 hover:text-white transition duration-200">Privacy Policy</a></li>
+                    <li><a href="/public/terms.html" class="text-gray-400 hover:text-white transition duration-200">Terms of Service</a></li>
+                    <li><a href="/public/contact.html" class="text-gray-400 hover:text-white transition duration-200">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-4">Reach Out</h3>
+                <p class="text-gray-400">Have questions or want to suggest a tool?</p>
+                <a href="/public/contact.html" class="inline-block bg-blue-600 text-white hover:bg-blue-700 px-6 py-2 rounded-md font-semibold mt-4 transition duration-300">Get in Touch</a>
+            </div>
+        </div>
+        <div class="text-center mt-10 text-gray-500">
+            &copy; <span id="current-year"></span> AI Tools Directory. All rights reserved.
+        </div>
+    </footer>
+
+    <script type="module" src="/js/firebase-config.js"></script>
+    <script type="module" src="/js/ui.js"></script>
+    <script type="module">
+        import { db } from '/js/firebase-config.js';
+
+        // Dynamic Social Links in Footer (re-imported for consistency)
+        document.addEventListener('DOMContentLoaded', () => {
+            const socialLinksContainer = document.getElementById('social-links-footer');
+            if (socialLinksContainer) {
+                db.collection('settings').doc('socialLinks').get().then(doc => {
+                    if (doc.exists) {
+                        const socialLinks = doc.data();
+                        socialLinksContainer.innerHTML = ''; // Clear loading text
+                        for (const platform in socialLinks) {
+                            if (socialLinks[platform]) {
+                                let iconPath = '';
+                                let ariaLabel = '';
+                                switch(platform) {
+                                    case 'facebook': iconPath = '/assets/icons/facebook.svg'; ariaLabel = 'Facebook'; break;
+                                    case 'twitter': iconPath = '/assets/icons/twitter.svg'; ariaLabel = 'Twitter/X'; break;
+                                    case 'linkedin': iconPath = '/assets/icons/linkedin.svg'; ariaLabel = 'LinkedIn'; break;
+                                    case 'github': iconPath = '/assets/icons/github.svg'; ariaLabel = 'GitHub'; break;
+                                    case 'youtube': iconPath = '/assets/icons/youtube.svg'; ariaLabel = 'YouTube'; break;
+                                }
+                                if (iconPath) {
+                                    socialLinksContainer.innerHTML += `
+                                        <a href="${socialLinks[platform]}" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition duration-200" aria-label="${ariaLabel}">
+                                            <img src="${iconPath}" alt="${ariaLabel}" class="h-6 w-6">
+                                        </a>
+                                    `;
+                                }
+                            }
+                        }
+                    } else {
+                        socialLinksContainer.innerHTML = '<p class="text-gray-500">Social links not configured.</p>';
+                    }
+                }).catch(error => {
+                    console.error("Error fetching social links:", error);
+                    socialLinksContainer.innerHTML = '<p class="text-red-400">Failed to load social links.</p>';
+                });
+            }
+
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+  </html>
