@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - AI Tools Directory</title>
+    <meta name="description" content="Admin login page for AI Tools Directory to manage tools, categories, and content.">
+    <meta name="robots" content="noindex, nofollow"> <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics-compat.js"></script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col justify-center items-center transition-colors duration-300">
+
+    <div class="w-full max-w-md mx-auto p-8 md:p-10 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+        <div class="text-center mb-8">
+            <img src="/assets/logo.png" alt="AI Tools Directory Logo" class="h-16 mx-auto mb-4 filter invert dark:filter-none">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100">Admin Login</h1>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">Access the AI Tools Directory management panel.</p>
+        </div>
+
+        <form id="login-form" class="space-y-6">
+            <div>
+                <label for="login-email" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Email Address</label>
+                <input type="email" id="login-email" placeholder="admin@example.com" required
+                       class="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+                <label for="login-password" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Password</label>
+                <input type="password" id="login-password" placeholder="********" required
+                       class="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <button type="submit"
+                    class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
+                Login
+            </button>
+            <p id="login-message" class="mt-4 text-center text-sm text-red-600 dark:text-red-400"></p>
+        </form>
+
+        <p class="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
+            Forgot your password? Please contact your administrator.
+        </p>
+    </div>
+
+    <footer class="mt-8 text-center text-gray-500 dark:text-gray-400">
+        &copy; <span id="current-year-login"></span> AI Tools Directory. All rights reserved.
+    </footer>
+
+    <script type="module" src="/js/firebase-config.js"></script>
+    <script type="module" src="/js/ui.js"></script>
+    <script type="module">
+        import { auth } from '/js/firebase-config.js';
+        import { signInWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js';
+
+        // Check auth state on page load
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, redirect to admin dashboard
+                window.location.href = '/public/admin.html';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('login-form');
+            const loginEmailInput = document.getElementById('login-email');
+            const loginPasswordInput = document.getElementById('login-password');
+            const loginMessage = document.getElementById('login-message');
+
+            if (loginForm) {
+                loginForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const email = loginEmailInput.value;
+                    const password = loginPasswordInput.value;
+                    loginMessage.textContent = ''; // Clear previous messages
+
+                    try {
+                        await signInWithEmailAndPassword(auth, email, password);
+                        // Redirect handled by onAuthStateChanged listener
+                    } catch (error) {
+                        console.error("Login error:", error.code, error.message);
+                        let errorMessage = 'Login failed. Please check your credentials.';
+                        if (error.code === 'auth/user-not-found') {
+                            errorMessage = 'No user found with this email.';
+                        } else if (error.code === 'auth/wrong-password') {
+                            errorMessage = 'Incorrect password.';
+                        } else if (error.code === 'auth/invalid-email') {
+                            errorMessage = 'Invalid email address format.';
+                        }
+                        loginMessage.textContent = errorMessage;
+                    }
+                });
+            }
+
+            // Set current year in footer
+            document.getElementById('current-year-login').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>
