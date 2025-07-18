@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - AI Tools Directory</title>
+    <meta name="description" content="Admin dashboard for managing AI tools, categories, and blog posts on AI Tools Directory.">
+    <meta name="robots" content="noindex, nofollow"> <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics-compat.js"></script>
+
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <header class="bg-gray-800 dark:bg-gray-900 text-white shadow-md z-40">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/public/admin.html" class="flex items-center space-x-2">
+                <img src="/assets/logo.png" alt="AI Tools Directory Logo" class="h-8 filter invert dark:filter-none">
+                <span class="text-2xl font-bold">Admin Dashboard</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <span id="admin-user-email" class="text-sm"></span>
+                <button id="admin-logout-btn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition duration-300">Logout</button>
+                <button id="themeToggle" class="p-2 rounded-full bg-gray-700 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg id="moonIcon" class="h-6 w-6 text-gray-200 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9 9 0 008.354-5.646z"></path></svg>
+                    <svg id="sunIcon" class="h-6 w-6 text-gray-200 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h1M3 12h1m15.325-7.778l-.707-.707M6.364 17.636l-.707.707M18.364 6.364l.707-.707M5.636 18.364l.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8">
+        <aside class="w-full lg:w-1/4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 lg:h-fit sticky top-24">
+            <nav>
+                <ul class="space-y-4">
+                    <li><a href="#dashboard-overview" class="block text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold text-lg py-2 px-3 rounded-md bg-blue-50 dark:bg-gray-700">Dashboard Overview</a></li>
+                    <li><a href="#manage-tools" class="block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2 px-3 rounded-md">Manage AI Tools</a></li>
+                    <li><a href="#manage-categories" class="block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2 px-3 rounded-md">Manage Categories</a></li>
+                    <li><a href="#manage-blogs" class="block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2 px-3 rounded-md">Manage Blog Posts</a></li>
+                    <li><a href="#manage-submissions" class="block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2 px-3 rounded-md">Manage Submissions</a></li>
+                    <li><a href="#site-settings" class="block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2 px-3 rounded-md">Site Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <section class="flex-grow w-full lg:w-3/4 space-y-8">
+
+            <div id="dashboard-overview" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">Dashboard Overview</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-blue-50 dark:bg-blue-900/30 p-5 rounded-lg shadow">
+                        <h3 class="text-xl font-semibold text-blue-700 dark:text-blue-300 mb-2">Total Tools</h3>
+                        <p id="total-tools-count" class="text-4xl font-bold text-blue-800 dark:text-blue-200">0</p>
+                    </div>
+                    <div class="bg-green-50 dark:bg-green-900/30 p-5 rounded-lg shadow">
+                        <h3 class="text-xl font-semibold text-green-700 dark:text-green-300 mb-2">Total Blog Posts</h3>
+                        <p id="total-blogs-count" class="text-4xl font-bold text-green-800 dark:text-green-200">0</p>
+                    </div>
+                    <div class="bg-yellow-50 dark:bg-yellow-900/30 p-5 rounded-lg shadow">
+                        <h3 class="text-xl font-semibold text-yellow-700 dark:text-yellow-300 mb-2">Pending Submissions</h3>
+                        <p id="pending-submissions-count" class="text-4xl font-bold text-yellow-800 dark:text-yellow-200">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="manage-tools" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">Manage AI Tools</h2>
+
+                <button id="add-tool-btn" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-md mb-6 transition duration-300">Add New Tool</button>
+
+                <div id="tool-form-container" class="hidden bg-gray-50 dark:bg-gray-700 p-6 rounded-md mb-8">
+                    <h3 id="tool-form-title" class="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Add New AI Tool</h3>
+                    <form id="ai-tool-form" class="space-y-4">
+                        <input type="hidden" id="tool-id">
+                        <div>
+                            <label for="tool-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tool Name</label>
+                            <input type="text" id="tool-name" required class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+                        </div>
+                        <div>
+                            <label for="tool-description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+                            <textarea id="tool-description" rows="4" required class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"></textarea>
+                        </div>
+                        <div>
+                            <label for="tool-url" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Website URL</label>
+                            <input type="url" id="tool-url" required class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+                        </div>
+                        <div>
+                            <label for="tool-category" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Category</label>
+                            <select id="tool-category" multiple required class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+                                </select>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Hold Ctrl/Cmd to select multiple categories.</p>
+                        </div>
+                        <div>
+                            <label for="tool-features" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Features (comma-separated)</label>
+                            <input type="text" id="tool-features" class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+                        </div>
+                        <div>
+                            <label for="tool-pricing" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Pricing Model</label>
+                            <select id="tool-pricing" class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+                                <option value="Free">Free</option>
+                                <option value="Freemium">Freemium</option>
+                                <option value="Paid">Paid</option>
+                                <option value="Contact for Price">Contact for Price</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="tool-image" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Image Upload</label>
+                            <input type="file" id="tool-image" accept="image/*" class="mt-1 block w-full text-sm text-gray-900 dark:text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-blue-900/50 dark:file:text-blue-300 dark:hover:file:bg-blue-900">
+                            <img id="current-tool-image-preview" src="" alt="Current tool image" class="mt-2 w-24 h-24 object-cover rounded-md hidden">
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="tool-featured" class="h-4 w-4 text-blue-600 dark:text-blue-400 border-gray-300 rounded focus:ring-blue-500">
+                            <label for="tool-featured" class="ml-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Featured Tool</label>
+                        </div>
+                        <div class="flex justify-end space-x-4">
+                            <button type="button" id="cancel-tool-edit" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md transition duration-300">Cancel</button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-md transition duration-300">Save Tool</button>
+                        </div>
+                        <p id="tool-form-message" class="text-sm text-center"></p>
+                    </form>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
+                        <thead class="bg-gray-100 dark:bg-gray-700">
+                            <tr>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Name</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Category</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Pricing</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tools-list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <tr><td colspan="4" class="text-center py-4 text-gray-500 dark:text-gray-400">Loading tools...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="manage-categories" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">Manage Categories</h2>
+
+                <div class="flex items-end space-x-4 mb-6">
+                    <div>
+                        <label for="category-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Category Name</label>
+                        <input type="text" id="category-name" placeholder="New Category Name" class="mt-1 block w-64 p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+                    </div>
+                    <button id="add-category-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-md transition duration-300">Add Category</button>
+                </div>
+                <p id="category-form-message" class="text-sm mb-4"></p>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
+                        <thead class="bg-gray-100 dark:bg-gray-700">
+                            <tr>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Category Name</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categories-list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <tr><td colspan="2" class="text-center py-4 text-gray-500 dark:text-gray-400">Loading categories...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="manage-blogs" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">Manage Blog Posts</h2>
+
+                <button id="add-blog-btn" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-md mb-6 transition duration-300">Add New Blog Post</button>
+
+                <div id="blog-form-container" class="hidden bg-gray-50 dark:bg-gray-700 p-6 rounded-md mb-8">
+                    <h3 id="blog-form-title" class="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Add New Blog Post</h3>
+                    <form id="blog-post-form" class="space-y-4">
+                        <input type="hidden" id="blog-id">
+                        <div>
+                            <label for="blog-title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Title</label>
+                            <input type="text" id="blog-title" required class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+                        </div>
+                        <div>
+                            <label for="blog-author" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Author</label>
+                            <input type="text" id="blog-author" required class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+                        </div>
+                        <div>
+                            <label for="blog-body" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Content</label>
+                            <textarea id="blog-body" rows="10" class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"></textarea>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Supports Markdown. For rich text, ensure TinyMCE is initialized.</p>
+                        </div>
+                        <div>
+                            <label for="blog-tags" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tags (comma-separated)</label>
+                            <input type="text" id="blog-tags" class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+                        </div>
+                        <div>
+                            <label for="blog-image" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cover Image Upload</label>
+                            <input type="file" id="blog-image" accept="image/*" class="mt-1 block w-full text-sm text-gray-900 dark:text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-blue-900/50 dark:file:text-blue-300 dark:hover:file:bg-blue-900">
+                            <img id="current-blog-image-preview" src="" alt="Current blog image" class="mt-2 w-24 h-24 object-cover rounded-md hidden">
+                        </div>
+                        <div class="flex justify-end space-x-4">
+                            <button type="button" id="cancel-blog-edit" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md transition duration-300">Cancel</button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-md transition duration-300">Save Blog Post</button>
+                        </div>
+                        <p id="blog-form-message" class="text-sm text-center"></p>
+                    </form>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
+                        <thead class="bg-gray-100 dark:bg-gray-700">
+                            <tr>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Title</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Author</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Published Date</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="blog-posts-list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <tr><td colspan="4" class="text-center py-4 text-gray-500 dark:text-gray-400">Loading blog posts...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="manage-submissions" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">Manage Submissions</h2>
+
+                <p class="text-gray-700 dark:text-gray-300 mb-4">Review and manage submitted AI tools and contact form messages.</p>
+
+                <h3 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Tool Submissions</h3>
+                <div class="overflow-x-auto mb-8">
+                    <table class="min-w-full bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
+                        <thead class="bg-gray-100 dark:bg-gray-700">
+                            <tr>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Tool Name</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Submitted By</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Date</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tool-submissions-list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <tr><td colspan="4" class="text-center py-4 text-gray-500 dark:text-gray-400">No tool submissions yet.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Contact Form Messages</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
+                        <thead class="bg-gray-100 dark:bg-gray-700">
+                            <tr>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Sender</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Subject</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Date</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contact-submissions-list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <tr><td colspan="4" class="text-center py-4 text-gray-500 dark:text-gray-400">No contact messages yet.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="site-settings" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">Site Settings</h2>
+
+                <h3 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Social Media Links</h3>
+                <form id="social-links-form" class="space-y-4 mb-8">
+                    <div>
+                        <label for="social-facebook" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Facebook URL</label>
+                        <input type="url" id="social-facebook" class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100" placeholder="https://facebook.com/yourpage">
+                    </div>
+                    <div>
+                        <label for="social-twitter" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Twitter/X URL</label>
+                        <input type="url" id="social-twitter" class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100" placeholder="https://twitter.com/yourhandle">
+                    </div>
+                    <div>
+                        <label for="social-linkedin" class="block text-sm font-medium text-gray-700 dark:text-gray-300">LinkedIn URL</label>
+                        <input type="url" id="social-linkedin" class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100" placeholder="https://linkedin.com/company/yourcompany">
+                    </div>
+                    <div>
+                        <label for="social-github" class="block text-sm font-medium text-gray-700 dark:text-gray-300">GitHub URL</label>
+                        <input type="url" id="social-github" class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100" placeholder="https://github.com/yourorg">
+                    </div>
+                    <div>
+                        <label for="social-youtube" class="block text-sm font-medium text-gray-700 dark:text-gray-300">YouTube URL</label>
+                        <input type="url" id="social-youtube" class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100" placeholder="https://youtube.com/yourchannel">
+                    </div>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-md transition duration-300">Save Social Links</button>
+                    <p id="social-links-message" class="text-sm mt-2"></p>
+                </form>
+            </div>
+
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 dark:bg-gray-900 text-white py-6 mt-8">
+        <div class="container mx-auto px-4 text-center text-gray-500">
+            &copy; <span id="current-year-admin"></span> AI Tools Directory Admin.
+        </div>
+    </footer>
+
+    <script type="module" src="/js/firebase-config.js"></script>
+    <script type="module" src="/js/ui.js"></script>
+    <script type="module" src="/js/admin.js"></script>
+</body>
+                          </html>
