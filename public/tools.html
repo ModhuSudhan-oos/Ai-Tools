@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All AI Tools - AI Tools Directory</title>
+    <meta name="description" content="Browse and filter through our comprehensive list of AI tools across various categories. Find the perfect AI solution for your needs.">
+    <meta name="keywords" content="all AI tools, AI tool list, browse AI, filter AI tools, AI software directory, best AI tools">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.yourdomain.com/public/tools.html">
+    <meta property="og:title" content="All AI Tools - AI Tools Directory">
+    <meta property="og:description" content="Browse and filter through our comprehensive list of AI tools across various categories. Find the perfect AI solution for your needs.">
+    <meta property="og:image" content="https://www.yourdomain.com/assets/logo.png">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.yourdomain.com/public/tools.html">
+    <meta property="twitter:title" content="All AI Tools - AI Tools Directory">
+    <meta property="twitter:description" content="Browse and filter through our comprehensive list of AI tools across various categories. Find the perfect AI solution for your needs.">
+    <meta property="twitter:image" content="https://www.yourdomain.com/assets/logo.png">
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics-compat.js"></script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <button id="scrollToTopBtn" class="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-transform duration-300 scale-0 opacity-0 z-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/" class="flex items-center space-x-2">
+                <img src="/assets/logo.png" alt="AI Tools Directory Logo" class="h-8">
+                <span class="text-2xl font-bold text-gray-800 dark:text-white">AI Tools Directory</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <a href="/public/tools.html" class="hover:text-blue-600 dark:hover:text-blue-400 font-semibold">Tools</a>
+                <a href="/public/blog.html" class="hover:text-blue-600 dark:hover:text-blue-400">Blog</a>
+                <a href="/public/contact.html" class="hover:text-blue-600 dark:hover:text-blue-400">Contact</a>
+
+                <button id="themeToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg id="moonIcon" class="h-6 w-6 text-gray-800 dark:text-gray-200 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9 9 0 008.354-5.646z"></path></svg>
+                    <svg id="sunIcon" class="h-6 w-6 text-gray-800 dark:text-gray-200 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h1M3 12h1m15.325-7.778l-.707-.707M6.364 17.636l-.707.707M18.364 6.364l.707-.707M5.636 18.364l.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="py-16">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-extrabold text-center mb-12 text-gray-800 dark:text-gray-100">Browse All AI Tools</h1>
+
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-8">
+                <div class="mb-6">
+                    <label for="search-input" class="block text-gray-700 dark:text-gray-300 text-lg font-semibold mb-2">Search Tools</label>
+                    <input type="text" id="search-input" placeholder="e.g., Image Generation, AI Writer" class="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-gray-700 dark:text-gray-300 text-lg font-semibold mb-2">Filter by Category</label>
+                    <div id="category-filters" class="flex flex-wrap gap-2">
+                        <button class="filter-btn bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-200 text-sm md:text-base" data-category="all">All</button>
+                        </div>
+                </div>
+
+                <div class="flex justify-end">
+                    <button id="reset-filters-btn" class="bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-6 py-2 rounded-md hover:bg-gray-400 dark:hover:bg-gray-600 transition duration-300">Reset Filters</button>
+                </div>
+            </div>
+
+            <div id="tools-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <p class="text-center text-gray-600 dark:text-gray-400 col-span-full" id="loading-message">Loading AI tools...</p>
+            </div>
+            <p id="no-results-message" class="text-center text-gray-600 dark:text-gray-400 col-span-full mt-8 hidden">No tools found matching your criteria.</p>
+
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 dark:bg-gray-900 text-white py-12 mt-16">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4">AI Tools Directory</h3>
+                <p class="text-gray-400">Discover and explore the best AI tools.</p>
+                <div id="social-links-footer" class="flex space-x-4 mt-4">
+                    </div>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="/public/about.html" class="text-gray-400 hover:text-white transition duration-200">About Us</a></li>
+                    <li><a href="/public/privacy.html" class="text-gray-400 hover:text-white transition duration-200">Privacy Policy</a></li>
+                    <li><a href="/public/terms.html" class="text-gray-400 hover:text-white transition duration-200">Terms of Service</a></li>
+                    <li><a href="/public/contact.html" class="text-gray-400 hover:text-white transition duration-200">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-4">Reach Out</h3>
+                <p class="text-gray-400">Have questions or want to suggest a tool?</p>
+                <a href="/public/contact.html" class="inline-block bg-blue-600 text-white hover:bg-blue-700 px-6 py-2 rounded-md font-semibold mt-4 transition duration-300">Get in Touch</a>
+            </div>
+        </div>
+        <div class="text-center mt-10 text-gray-500">
+            &copy; <span id="current-year"></span> AI Tools Directory. All rights reserved.
+        </div>
+    </footer>
+
+    <script type="module" src="/js/firebase-config.js"></script>
+    <script type="module" src="/js/ui.js"></script>
+    <script type="module">
+        import { db } from '/js/firebase-config.js';
+        import { createToolCard } from '/js/ui.js';
+
+        const toolsGrid = document.getElementById('tools-grid');
+        const categoryFiltersContainer = document.getElementById('category-filters');
+        const searchInput = document.getElementById('search-input');
+        const resetFiltersBtn = document.getElementById('reset-filters-btn');
+        const loadingMessage = document.getElementById('loading-message');
+        const noResultsMessage = document.getElementById('no-results-message');
+
+        let allToolsData = []; // Store all tools fetched from Firestore
+        let currentFilterCategory = 'all';
+        let currentSearchTerm = '';
+
+        // Function to fetch and display all tools
+        async function fetchAndDisplayTools() {
+            try {
+                const snapshot = await db.collection('tools').get();
+                if (loadingMessage) loadingMessage.remove();
+
+                if (snapshot.empty) {
+                    toolsGrid.innerHTML = '<p class="text-center text-gray-600 dark:text-gray-400 col-span-full">No AI tools available yet.</p>';
+                    return;
+                }
+
+                allToolsData = [];
+                const categories = new Set();
+                snapshot.forEach(doc => {
+                    const tool = { ...doc.data(), id: doc.id };
+                    allToolsData.push(tool);
+                    if (tool.category) {
+                        categories.add(tool.category);
+                    }
+                });
+
+                renderCategoryFilters(Array.from(categories));
+                applyFiltersAndRenderTools();
+
+            } catch (error) {
+                console.error("Error fetching all tools:", error);
+                if (loadingMessage) loadingMessage.textContent = 'Failed to load tools. Please try again.';
+            }
+        }
+
+        // Function to render category filter buttons
+        function renderCategoryFilters(categories) {
+            categoryFiltersContainer.querySelectorAll('button:not([data-category="all"])').forEach(btn => btn.remove()); // Clear existing dynamic buttons
+            categories.sort().forEach(category => {
+                const button = document.createElement('button');
+                button.className = 'filter-btn bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-full hover:bg-blue-500 hover:text-white transition duration-200 text-sm md:text-base';
+                button.textContent = category;
+                button.dataset.category = category;
+                categoryFiltersContainer.appendChild(button);
+            });
+            // Ensure "All" button is active initially
+            categoryFiltersContainer.querySelector('[data-category="all"]').classList.add('bg-blue-500', 'text-white');
+            categoryFiltersContainer.querySelector('[data-category="all"]').classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-800', 'dark:text-gray-200');
+        }
+
+        // Function to filter and render tools based on current criteria
+        function applyFiltersAndRenderTools() {
+            let filteredTools = [...allToolsData]; // Start with all tools
+
+            // Filter by category
+            if (currentFilterCategory !== 'all') {
+                filteredTools = filteredTools.filter(tool => tool.category === currentFilterCategory);
+            }
+
+            // Filter by search term (title, description, tags)
+            if (currentSearchTerm) {
+                const searchTermLower = currentSearchTerm.toLowerCase();
+                filteredTools = filteredTools.filter(tool =>
+                    tool.title.toLowerCase().includes(searchTermLower) ||
+                    tool.description.toLowerCase().includes(searchTermLower) ||
+                    (tool.tags && tool.tags.some(tag => tag.toLowerCase().includes(searchTermLower)))
+                );
+            }
+
+            toolsGrid.innerHTML = ''; // Clear previous results
+            if (filteredTools.length === 0) {
+                noResultsMessage.classList.remove('hidden');
+            } else {
+                noResultsMessage.classList.add('hidden');
+                filteredTools.forEach(tool => {
+                    toolsGrid.appendChild(createToolCard(tool));
+                });
+            }
+        }
+
+        // Event Listeners
+        if (categoryFiltersContainer) {
+            categoryFiltersContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('filter-btn')) {
+                    currentFilterCategory = e.target.dataset.category;
+                    // Update active button styles
+                    categoryFiltersContainer.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('bg-blue-500', 'text-white');
+                        btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-800', 'dark:text-gray-200');
+                    });
+                    e.target.classList.add('bg-blue-500', 'text-white');
+                    e.target.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-800', 'dark:text-gray-200');
+
+                    applyFiltersAndRenderTools();
+                }
+            });
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                currentSearchTerm = e.target.value.trim();
+                applyFiltersAndRenderTools();
+            });
+        }
+
+        if (resetFiltersBtn) {
+            resetFiltersBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                currentSearchTerm = '';
+                currentFilterCategory = 'all';
+
+                // Reset category button styling
+                categoryFiltersContainer.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('bg-blue-500', 'text-white');
+                    btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-800', 'dark:text-gray-200');
+                });
+                categoryFiltersContainer.querySelector('[data-category="all"]').classList.add('bg-blue-500', 'text-white');
+                categoryFiltersContainer.querySelector('[data-category="all"]').classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-800', 'dark:text-gray-200');
+
+                applyFiltersAndRenderTools();
+            });
+        }
+
+
+        // Dynamic Social Links in Footer (re-imported from index.html for consistency)
+        document.addEventListener('DOMContentLoaded', () => {
+            const socialLinksContainer = document.getElementById('social-links-footer');
+            if (socialLinksContainer) {
+                db.collection('settings').doc('socialLinks').get().then(doc => {
+                    if (doc.exists) {
+                        const socialLinks = doc.data();
+                        socialLinksContainer.innerHTML = ''; // Clear loading text
+                        for (const platform in socialLinks) {
+                            if (socialLinks[platform]) {
+                                let iconPath = '';
+                                let ariaLabel = '';
+                                switch(platform) {
+                                    case 'facebook': iconPath = '/assets/icons/facebook.svg'; ariaLabel = 'Facebook'; break;
+                                    case 'twitter': iconPath = '/assets/icons/twitter.svg'; ariaLabel = 'Twitter/X'; break;
+                                    case 'linkedin': iconPath = '/assets/icons/linkedin.svg'; ariaLabel = 'LinkedIn'; break;
+                                    case 'github': iconPath = '/assets/icons/github.svg'; ariaLabel = 'GitHub'; break;
+                                    case 'youtube': iconPath = '/assets/icons/youtube.svg'; ariaLabel = 'YouTube'; break;
+                                }
+                                if (iconPath) {
+                                    socialLinksContainer.innerHTML += `
+                                        <a href="${socialLinks[platform]}" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition duration-200" aria-label="${ariaLabel}">
+                                            <img src="${iconPath}" alt="${ariaLabel}" class="h-6 w-6">
+                                        </a>
+                                    `;
+                                }
+                            }
+                        }
+                    } else {
+                        socialLinksContainer.innerHTML = '<p class="text-gray-500">Social links not configured.</p>';
+                    }
+                }).catch(error => {
+                    console.error("Error fetching social links:", error);
+                    socialLinksContainer.innerHTML = '<p class="text-red-400">Failed to load social links.</p>';
+                });
+            }
+
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
+
+
+        // Initial fetch
+        fetchAndDisplayTools();
+    </script>
+</body>
+</html>
