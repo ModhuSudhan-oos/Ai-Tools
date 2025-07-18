@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - AI Tools Directory</title>
+    <meta name="description" content="Get in touch with AI Tools Directory. Send us your questions, feedback, or suggestions for new AI tools.">
+    <meta name="keywords" content="contact AI Tools Directory, AI tool submission, feedback, support, general inquiry">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.yourdomain.com/public/contact.html">
+    <meta property="og:title" content="Contact Us - AI Tools Directory">
+    <meta property="og:description" content="Get in touch with AI Tools Directory. Send us your questions, feedback, or suggestions for new AI tools.">
+    <meta property="og:image" content="https://www.yourdomain.com/assets/logo.png">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.yourdomain.com/public/contact.html">
+    <meta property="twitter:title" content="Contact Us - AI Tools Directory">
+    <meta property="twitter:description" content="Get in touch with AI Tools Directory. Send us your questions, feedback, or suggestions for new AI tools.">
+    <meta property="twitter:image" content="https://www.yourdomain.com/assets/logo.png">
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics-compat.js"></script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <button id="scrollToTopBtn" class="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-transform duration-300 scale-0 opacity-0 z-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/" class="flex items-center space-x-2">
+                <img src="/assets/logo.png" alt="AI Tools Directory Logo" class="h-8">
+                <span class="text-2xl font-bold text-gray-800 dark:text-white">AI Tools Directory</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <a href="/public/tools.html" class="hover:text-blue-600 dark:hover:text-blue-400">Tools</a>
+                <a href="/public/blog.html" class="hover:text-blue-600 dark:hover:text-blue-400">Blog</a>
+                <a href="/public/contact.html" class="hover:text-blue-600 dark:hover:text-blue-400 font-semibold">Contact</a>
+
+                <button id="themeToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg id="moonIcon" class="h-6 w-6 text-gray-800 dark:text-gray-200 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9 9 0 008.354-5.646z"></path></svg>
+                    <svg id="sunIcon" class="h-6 w-6 text-gray-800 dark:text-gray-200 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h1M3 12h1m15.325-7.778l-.707-.707M6.364 17.636l-.707.707M18.364 6.364l.707-.707M5.636 18.364l.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="py-16">
+        <div class="container mx-auto px-4 max-w-2xl">
+            <h1 class="text-4xl font-extrabold text-center mb-12 text-gray-800 dark:text-gray-100">Contact Us</h1>
+
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 md:p-12">
+                <p class="text-center text-lg text-gray-700 dark:text-gray-300 mb-8">
+                    Have a question, feedback, or a suggestion for a new AI tool? We'd love to hear from you!
+                </p>
+
+                <form id="contact-form" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Your Name</label>
+                        <input type="text" id="name" name="name" required class="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Your Email</label>
+                        <input type="email" id="email" name="email" required class="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="subject" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Subject</label>
+                        <input type="text" id="subject" name="subject" required class="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Message</label>
+                        <textarea id="message" name="message" rows="6" required class="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
+                        Send Message
+                    </button>
+                    <p id="form-message" class="mt-4 text-center text-sm"></p>
+                </form>
+
+                <div class="mt-10 text-center">
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">Other Ways to Connect</h3>
+                    <p class="text-lg text-gray-700 dark:text-gray-300 mb-4">
+                        You can also reach us directly via email at:
+                        <a href="mailto:your-email@yourdomain.com" class="text-blue-600 hover:underline">your-email@yourdomain.com</a>
+                    </p>
+                    <div id="contact-social-links" class="flex justify-center space-x-6 mt-6">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 dark:bg-gray-900 text-white py-12 mt-16">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4">AI Tools Directory</h3>
+                <p class="text-gray-400">Discover and explore the best AI tools.</p>
+                <div id="social-links-footer" class="flex space-x-4 mt-4">
+                    </div>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="/public/about.html" class="text-gray-400 hover:text-white transition duration-200">About Us</a></li>
+                    <li><a href="/public/privacy.html" class="text-gray-400 hover:text-white transition duration-200">Privacy Policy</a></li>
+                    <li><a href="/public/terms.html" class="text-gray-400 hover:text-white transition duration-200">Terms of Service</a></li>
+                    <li><a href="/public/contact.html" class="text-gray-400 hover:text-white transition duration-200">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-4">Reach Out</h3>
+                <p class="text-gray-400">Have questions or want to suggest a tool?</p>
+                <a href="/public/contact.html" class="inline-block bg-blue-600 text-white hover:bg-blue-700 px-6 py-2 rounded-md font-semibold mt-4 transition duration-300">Get in Touch</a>
+            </div>
+        </div>
+        <div class="text-center mt-10 text-gray-500">
+            &copy; <span id="current-year"></span> AI Tools Directory. All rights reserved.
+        </div>
+    </footer>
+
+    <script type="module" src="/js/firebase-config.js"></script>
+    <script type="module" src="/js/ui.js"></script>
+    <script type="module">
+        import { db } from '/js/firebase-config.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const contactForm = document.getElementById('contact-form');
+            const formMessage = document.getElementById('form-message');
+
+            if (contactForm) {
+                contactForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const name = contactForm.name.value;
+                    const email = contactForm.email.value;
+                    const subject = contactForm.subject.value;
+                    const message = contactForm.message.value;
+
+                    try {
+                        await db.collection('contactSubmissions').add({
+                            name,
+                            email,
+                            subject,
+                            message,
+                            timestamp: new Date()
+                        });
+                        formMessage.textContent = 'Thank you for your message! We will get back to you soon.';
+                        formMessage.className = 'mt-4 text-center text-sm text-green-600 dark:text-green-400';
+                        contactForm.reset();
+                    } catch (error) {
+                        console.error("Error submitting contact form:", error);
+                        formMessage.textContent = 'Failed to send message. Please try again later.';
+                        formMessage.className = 'mt-4 text-center text-sm text-red-600 dark:text-red-400';
+                    }
+                });
+            }
+
+            // Dynamic Social Links in Footer and Contact Section (re-imported for consistency)
+            const socialLinksContainerFooter = document.getElementById('social-links-footer');
+            const socialLinksContainerContact = document.getElementById('contact-social-links');
+
+            if (socialLinksContainerFooter || socialLinksContainerContact) {
+                db.collection('settings').doc('socialLinks').get().then(doc => {
+                    if (doc.exists) {
+                        const socialLinks = doc.data();
+                        const renderSocialLinks = (container) => {
+                            if (container) {
+                                container.innerHTML = ''; // Clear loading text
+                                for (const platform in socialLinks) {
+                                    if (socialLinks[platform]) {
+                                        let iconPath = '';
+                                        let ariaLabel = '';
+                                        switch(platform) {
+                                            case 'facebook': iconPath = '/assets/icons/facebook.svg'; ariaLabel = 'Facebook'; break;
+                                            case 'twitter': iconPath = '/assets/icons/twitter.svg'; ariaLabel = 'Twitter/X'; break;
+                                            case 'linkedin': iconPath = '/assets/icons/linkedin.svg'; ariaLabel = 'LinkedIn'; break;
+                                            case 'github': iconPath = '/assets/icons/github.svg'; ariaLabel = 'GitHub'; break;
+                                            case 'youtube': iconPath = '/assets/icons/youtube.svg'; ariaLabel = 'YouTube'; break;
+                                        }
+                                        if (iconPath) {
+                                            container.innerHTML += `
+                                                <a href="${socialLinks[platform]}" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-blue-600 transition duration-200" aria-label="${ariaLabel}">
+                                                    <img src="${iconPath}" alt="${ariaLabel}" class="h-8 w-8">
+                                                </a>
+                                            `;
+                                        }
+                                    }
+                                }
+                            }
+                        };
+                        renderSocialLinks(socialLinksContainerFooter);
+                        renderSocialLinks(socialLinksContainerContact);
+                    } else {
+                        if (socialLinksContainerFooter) socialLinksContainerFooter.innerHTML = '<p class="text-gray-500">Social links not configured.</p>';
+                        if (socialLinksContainerContact) socialLinksContainerContact.innerHTML = '<p class="text-gray-500">Social links not configured.</p>';
+                    }
+                }).catch(error => {
+                    console.error("Error fetching social links:", error);
+                    if (socialLinksContainerFooter) socialLinksContainerFooter.innerHTML = '<p class="text-red-400">Failed to load social links.</p>';
+                    if (socialLinksContainerContact) socialLinksContainerContact.innerHTML = '<p class="text-red-400">Failed to load social links.</p>';
+                });
+            }
+
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>
