@@ -1,0 +1,148 @@
+/* Custom CSS or Tailwind CSS imports */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Custom styles specific to your project */
+
+/* Utility for hiding elements */
+.hidden {
+    display: none;
+}
+
+/* Scroll-to-top button animation */
+#scrollToTopBtn.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+#scrollToTopBtn {
+    transform: translateY(20px);
+    opacity: 0;
+}
+
+/* Simple animations for content loading */
+.fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tool Card Styles */
+.tool-card {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col;
+}
+
+.tool-card-image-container {
+    @apply w-full h-48 flex items-center justify-center bg-gray-100 dark:bg-gray-700; /* For centered images */
+}
+
+.tool-card img {
+    @apply w-full h-full object-contain; /* Use object-contain for logos/diverse images */
+}
+
+.tool-card-content {
+    @apply p-6 flex-grow flex flex-col;
+}
+
+.tool-card-title {
+    @apply text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100;
+}
+
+.tool-card-description {
+    @apply text-gray-600 dark:text-gray-300 text-sm mb-4 flex-grow;
+}
+
+.tool-card-tags {
+    @apply flex flex-wrap gap-2 mb-4;
+}
+
+.tool-card-tag {
+    @apply bg-blue-100 dark:bg-blue-700 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-xs font-medium;
+}
+
+.tool-card-link {
+    @apply mt-auto inline-block bg-blue-600 text-white text-center py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300;
+}
+
+/* Blog Card Styles */
+.blog-card {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col;
+}
+
+.blog-card-image-container {
+    @apply w-full h-48 overflow-hidden;
+}
+
+.blog-card img {
+    @apply w-full h-full object-cover; /* Use object-cover for blog post covers */
+}
+
+.blog-card-content {
+    @apply p-6 flex-grow flex flex-col;
+}
+
+.blog-card-title {
+    @apply text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100;
+}
+
+.blog-card-date {
+    @apply text-gray-500 dark:text-gray-400 text-sm mb-2;
+}
+
+.blog-card-description {
+    @apply text-gray-600 dark:text-gray-300 text-sm mb-4 flex-grow;
+}
+
+.blog-card-link {
+    @apply mt-auto inline-block text-blue-600 hover:underline font-semibold;
+}
+
+/* Admin Panel Specific Styles (add as needed) */
+.admin-card {
+    @apply bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md;
+}
+
+.admin-form-group {
+    @apply mb-4;
+}
+
+.admin-form-label {
+    @apply block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2;
+}
+
+.admin-form-input, .admin-form-select, .admin-form-textarea {
+    @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600;
+}
+
+.admin-checkbox {
+    @apply mr-2 leading-tight;
+}
+
+.admin-btn {
+    @apply bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200;
+}
+
+.admin-btn-danger {
+    @apply bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200;
+}
+
+.admin-table {
+    @apply min-w-full bg-white dark:bg-gray-800;
+}
+
+.admin-table th, .admin-table td {
+    @apply py-2 px-4 border-b border-gray-200 dark:border-gray-700 text-left text-gray-800 dark:text-gray-200;
+}
+
+.admin-table th {
+    @apply bg-gray-100 dark:bg-gray-700 font-semibold;
+  }
