@@ -1,0 +1,83 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/public/admin",
+        "destination": "/public/admin.html"
+      },
+      {
+        "source": "/public/login",
+        "destination": "/public/login.html"
+      },
+      {
+        "source": "/public/tools",
+        "destination": "/public/tools.html"
+      },
+      {
+        "source": "/public/blog",
+        "destination": "/public/blog.html"
+      },
+      {
+        "source": "/public/submit-tool",
+        "destination": "/public/submit-tool.html"
+      },
+      {
+        "source": "/public/contact",
+        "destination": "/public/contact.html"
+      },
+      {
+        "source": "/public/about",
+        "destination": "/public/about.html"
+      },
+      {
+        "source": "/public/privacy",
+        "destination": "/public/privacy.html"
+      },
+      {
+        "source": "/public/terms",
+        "destination": "/public/terms.html"
+      }
+    ],
+    "headers": [
+        {
+          "source": "**",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=3600"
+            }
+          ]
+        },
+        {
+            "source": "**/*.@(jpg|jpeg|gif|png|webp|svg|js|css|eot|otf|ttf|ttc|woff|woff2)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                }
+            ]
+        },
+        {
+            "source": "**/*.json",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                }
+            ]
+        }
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false
+  }
+}
